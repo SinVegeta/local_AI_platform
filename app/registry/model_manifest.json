@@ -1,0 +1,141 @@
+{
+  "verification_date": "2026-10-22",
+  "runtime_policy": {
+    "max_concurrent_generation_models": 1,
+    "load_behavior": "ollama_managed",
+    "memory_note": "Download size is not a VRAM guarantee. Ollama may use CPU/GPU offloading based on quantization, context, and available memory.",
+    "automatic_downloads": false
+  },
+  "tasks": [
+    {
+      "id": "chat",
+      "display_name": "General Chat and Q&A",
+      "description": "General text conversations, explanations, and question answering.",
+      "preferred_model": "qwen3:4b",
+      "pipeline_available": true,
+      "pipeline_note": "Uses the existing local Ollama chat endpoint."
+    },
+    {
+      "id": "coding",
+      "display_name": "Coding Assistant",
+      "description": "Code generation, explanation, debugging, and structured tasks. Generated code is never executed.",
+      "preferred_model": "qwen2.5-coder:1.5b",
+      "pipeline_available": true,
+      "pipeline_note": "Uses the existing local Ollama chat endpoint; code execution is not implemented."
+    },
+    {
+      "id": "ocr",
+      "display_name": "OCR and Document Extraction",
+      "description": "Image and document understanding for OCR and structured extraction.",
+      "preferred_model": "glm-ocr",
+      "pipeline_available": true,
+      "pipeline_note": "Local OCR workflow supports digital PDFs, scanned PDFs, mixed PDFs, PNG, and JPEG processing."
+    },
+    {
+      "id": "embeddings",
+      "display_name": "Document Q&A / RAG",
+      "description": "Local embeddings, document indexing, retrieval, and cited document Q&A.",
+      "preferred_model": "nomic-embed-text",
+      "pipeline_available": true,
+      "pipeline_note": "Uses local nomic-embed-text embeddings, SQLite retrieval, and the selected Ollama chat model."
+    }
+  ],
+  "models": [
+    {
+      "internal_id": "qwen3-4b",
+      "display_name": "Qwen3 4B",
+      "ollama_identifier": "qwen3:4b",
+      "provider": "ollama",
+      "supported_tasks": ["chat", "coding"],
+      "supported_input_modalities": ["text"],
+      "approximate_model_size": "~2.5 GB quantized",
+      "required_vram_estimate": "~3-4 GB, context and quantization dependent",
+      "license_identifier": "Apache-2.0",
+      "license_status": "verified_permissive",
+      "official_model_card_url": "https://huggingface.co/Qwen/Qwen3-4B",
+      "license_source_url": "https://huggingface.co/Qwen/Qwen3-4B",
+      "compatibility_status": "catalog_verified",
+      "notes": "Text generation model; Ollama installation and exact quantization are not verified until present in the local registry."
+    },
+    {
+      "internal_id": "granite-4-1-3b",
+      "display_name": "Granite 4.1 3B",
+      "ollama_identifier": "granite4.1:3b",
+      "provider": "ollama",
+      "supported_tasks": ["chat", "coding"],
+      "supported_input_modalities": ["text"],
+      "approximate_model_size": "~2.2 GB quantized",
+      "required_vram_estimate": "~3-4 GB, context and quantization dependent",
+      "license_identifier": "Apache-2.0",
+      "license_status": "verified_permissive",
+      "official_model_card_url": "https://huggingface.co/ibm-granite/granite-4.1-3b",
+      "license_source_url": "https://huggingface.co/ibm-granite/granite-4.1-3b",
+      "compatibility_status": "catalog_verified",
+      "notes": "IBM Granite instruct model; Ollama installation and exact quantization are not verified until present in the local registry."
+    },
+    {
+      "internal_id": "qwen25-coder-15b",
+      "display_name": "Qwen2.5-Coder 1.5B",
+      "ollama_identifier": "qwen2.5-coder:1.5b",
+      "provider": "ollama",
+      "supported_tasks": ["coding"],
+      "supported_input_modalities": ["text"],
+      "approximate_model_size": "~1.0 GB quantized",
+      "required_vram_estimate": "~1.5-2.5 GB, context and quantization dependent",
+      "license_identifier": "Apache-2.0",
+      "license_status": "verified_permissive",
+      "official_model_card_url": "https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "license_source_url": "https://qwenlm.github.io/blog/qwen2.5-coder-family/",
+      "compatibility_status": "catalog_verified",
+      "notes": "Dedicated coding model; generated code is text only and is never executed by this application."
+    },
+    {
+      "internal_id": "glm-ocr",
+      "display_name": "GLM-OCR",
+      "ollama_identifier": "glm-ocr",
+      "provider": "ollama",
+      "supported_tasks": ["ocr"],
+      "supported_input_modalities": ["image", "pdf", "text"],
+      "approximate_model_size": "~0.9B parameters; artifact size varies",
+      "required_vram_estimate": "~2-4 GB, pipeline and precision dependent",
+      "license_identifier": "MIT",
+      "license_status": "verified_permissive",
+      "official_model_card_url": "https://huggingface.co/zai-org/GLM-OCR",
+      "license_source_url": "https://github.com/zai-org/GLM-OCR",
+      "compatibility_status": "catalog_verified",
+      "notes": "The model is MIT; the complete OCR workflow may include deferred PP-DocLayoutV3 under Apache-2.0. Current OCR uses local Tesseract and GLM-OCR paths."
+    },
+    {
+      "internal_id": "nomic-embed-text",
+      "display_name": "Nomic Embed Text",
+      "ollama_identifier": "nomic-embed-text",
+      "provider": "ollama",
+      "supported_tasks": ["embeddings"],
+      "supported_input_modalities": ["text"],
+      "approximate_model_size": "~274 MB in current Ollama registry",
+      "required_vram_estimate": "~0.5-1 GB, runtime dependent",
+      "license_identifier": "Apache-2.0",
+      "license_status": "verified_permissive",
+      "official_model_card_url": "https://huggingface.co/nomic-ai/nomic-embed-text-v1.5",
+      "license_source_url": "https://huggingface.co/nomic-ai/nomic-embed-text-v1.5",
+      "compatibility_status": "catalog_verified",
+      "notes": "Embedding-only model; it must not be routed through the text chat endpoint."
+    },
+    {
+      "internal_id": "qwen25-3b",
+      "display_name": "Qwen2.5 3B",
+      "ollama_identifier": "qwen2.5:3b",
+      "provider": "ollama",
+      "supported_tasks": ["chat", "coding"],
+      "supported_input_modalities": ["text"],
+      "approximate_model_size": "~1.9 GB in current Ollama registry",
+      "required_vram_estimate": "~2.5-4 GB, context and quantization dependent",
+      "license_identifier": "Qwen Research",
+      "license_status": "verified_research_restricted",
+      "official_model_card_url": "https://huggingface.co/Qwen/Qwen2.5-3B",
+      "license_source_url": "https://ollama.com/library/qwen2.5",
+      "compatibility_status": "runtime_verified",
+      "notes": "Existing installed fallback. The exact 3B variant is not Apache-2.0; review the Qwen license before commercial distribution."
+    }
+  ]
+}
